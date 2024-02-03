@@ -23,7 +23,7 @@
                     <td>{{$loop->iteration}}</td>
                     <td>{{$post->title}}</td>
                     <td>{{$post->description}}</td>
-                    <td>{{$post->user_id}}</td>
+                    <td>{{$post->user->name}}</td>
                     <td>
                         <a href="{{route('posts.edit',$post->id)}}" class="btn btn-info" id="">Edit</a>
                     </td>

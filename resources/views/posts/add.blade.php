@@ -34,8 +34,9 @@
         <div class="mb-3">
             <label for="">User</label>
             <select  name="user_id" class="form-control" id="">
-                <option value="1"> Ahmed </option>
-                <option value="2"> Ali</option>
+                @foreach($users as $user)
+                <option value="{{$user->id}}"> {{$user->name}} </option>
+                @endforeach
             </select>
         </div>
         <div class="my-3">

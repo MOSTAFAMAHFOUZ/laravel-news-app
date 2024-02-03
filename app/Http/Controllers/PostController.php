@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -22,7 +23,8 @@ class PostController extends Controller
      */
     public function home()
     {
-        return view("posts.home");
+        $posts = Post::orderBy("created_at", "desc")->paginate(20);
+        return view("posts.home", ['posts' => $posts]);
     }
 
     /**
@@ -30,7 +32,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view("posts.add");
+        $users = User::select('id', 'name')->get();
+        return view("posts.add", ['users' => $users]);
     }
 
     /**
@@ -57,7 +60,8 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        return view("posts.show");
+        $post = Post::findOrFail($id);
+        return view("posts.show", ['post' => $post]);
     }
 
     /**
@@ -65,7 +69,8 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        return view("posts.edit");
+        $post = Post::findOrFail($id);
+        return view("posts.edit", ['post' => $post]);
     }
 
     /**
