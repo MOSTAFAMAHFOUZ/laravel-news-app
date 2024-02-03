@@ -18,24 +18,27 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach($posts as $post)
                 <tr>
-                    <td>1</td>
-                    <td>First Post</td>
-                    <td>First Description for The Post</td>
-                    <td>Mostafa</td>
+                    <td>{{$loop->iteration}}</td>
+                    <td>{{$post->title}}</td>
+                    <td>{{$post->description}}</td>
+                    <td>{{$post->user_id}}</td>
                     <td>
-                        <a href="{{route('posts.edit',1)}}" class="btn btn-info" id="">Edit</a>
+                        <a href="{{route('posts.edit',$post->id)}}" class="btn btn-info" id="">Edit</a>
                     </td>
                     <td>
-                        <form action="{{route('posts.destroy',1)}}" method="post">
+                        <form action="{{route('posts.destroy',$post->id)}}" method="post">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger" id="">Delete</button>
                         </form>
                     </td>
                 </tr>
+                @endforeach
             </tbody>
         </table>
+        {{$posts->links()}}
     </div>
 
 

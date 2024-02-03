@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -11,7 +12,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view("posts.index");
+        $posts = Post::orderBy("created_at", "desc")->paginate(20);
+        return view("posts.index", ['posts' => $posts]);
     }
 
 
@@ -36,7 +38,18 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        request()->validate([
+            'title' => 'required|string|min:3|max:200',
+            'description' => 'required|string|max:500',
+            'user_id' => "required|exists:users,id"
+        ]);
+
+        Post::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'user_id' => $request->user_id,
+        ]);
+        return back()->with('success', 'Data Added Successfully!');
     }
 
     /**
