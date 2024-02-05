@@ -27,6 +27,12 @@ class PostController extends Controller
         return view("posts.home", ['posts' => $posts]);
     }
 
+    public function search(Request $request)
+    {
+        $posts = Post::where("description", "LIKE", "%" . $request->q . "%")->paginate(20)->withQueryString();
+        return view("posts.home", ['posts' => $posts]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -43,7 +49,7 @@ class PostController extends Controller
     {
         request()->validate([
             'title' => 'required|string|min:3|max:200',
-            'description' => 'required|string|max:500',
+            'description' => 'required|string|max:1500',
             'user_id' => "required|exists:users,id"
         ]);
 
@@ -70,7 +76,9 @@ class PostController extends Controller
     public function edit(string $id)
     {
         $post = Post::findOrFail($id);
-        return view("posts.edit", ['post' => $post]);
+        $users = User::select('id', 'name')->get();
+
+        return view("posts.edit", ['post' => $post, 'users' => $users]);
     }
 
     /**
@@ -78,7 +86,19 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        request()->validate([
+            'title' => 'required|string|min:3|max:200',
+            'description' => 'required|string|max:1500',
+            'user_id' => "required|exists:users,id"
+        ]);
+
+
+        $post->title = $request->title;
+        $post->description = $request->description;
+        $post->user_id = $request->user_id;
+        $post->save();
+        return redirect()->route('posts.index')->with("success", "Data Updated Successfully !");
     }
 
     /**
@@ -86,6 +106,8 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->delete();
+        return back()->with('success', 'Post Deleted Successfully !');
     }
 }
