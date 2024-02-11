@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,6 +15,15 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::orderBy("created_at", "desc")->paginate(20);
+        // foreach ($posts as $post) {
+        //     $i = 1;
+        //     for ($i = 1; $i <= 3; $i++) {
+        //         DB::table('post_tag')->insert([
+        //             'post_id' => $post->id,
+        //             'tag_id' => $i
+        //         ]);
+        //     }
+        // }
         return view("posts.index", ['posts' => $posts]);
     }
 
