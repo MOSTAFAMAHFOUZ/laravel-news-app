@@ -26,6 +26,7 @@
                 <label for="">Tag Name</label>
                 <input type="text" name="name" class="form-control" value="{{ old('name') }}">
             </div>
+
             <div class="my-3">
                 <input type="submit" class="form-control bg-success text-white" value="save" />
             </div>

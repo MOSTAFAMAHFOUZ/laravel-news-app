@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
+use App\Models\Tag;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -15,15 +16,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::orderBy("created_at", "desc")->paginate(20);
-        // foreach ($posts as $post) {
-        //     $i = 1;
-        //     for ($i = 1; $i <= 3; $i++) {
-        //         DB::table('post_tag')->insert([
-        //             'post_id' => $post->id,
-        //             'tag_id' => $i
-        //         ]);
-        //     }
-        // }
+
         return view("posts.index", ['posts' => $posts]);
     }
 
@@ -49,7 +42,8 @@ class PostController extends Controller
     public function create()
     {
         $users = User::select('id', 'name')->get();
-        return view("posts.add", ['users' => $users]);
+        $tags = Tag::select('id', 'name')->get();
+        return view("posts.add", ['users' => $users, 'tags' => $tags]);
     }
 
     /**
@@ -63,11 +57,13 @@ class PostController extends Controller
             'user_id' => "required|exists:users,id"
         ]);
 
-        Post::create([
+        $post = Post::create([
             'title' => $request->title,
             'description' => $request->description,
             'user_id' => $request->user_id,
         ]);
+        // dd($request->tags);
+        $post->tags()->sync($request->tags);
         return back()->with('success', 'Data Added Successfully!');
     }
 
@@ -87,8 +83,10 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $users = User::select('id', 'name')->get();
+        $tags = Tag::select('id', 'name')->get();
 
-        return view("posts.edit", ['post' => $post, 'users' => $users]);
+
+        return view("posts.edit", ['post' => $post, 'users' => $users, 'tags' => $tags]);
     }
 
     /**
@@ -108,6 +106,10 @@ class PostController extends Controller
         $post->description = $request->description;
         $post->user_id = $request->user_id;
         $post->save();
+
+        $post->tags()->detach($request->tags);
+        $post->tags()->sync($request->tags);
+
         return redirect()->route('posts.index')->with("success", "Data Updated Successfully !");
     }
 
@@ -121,3 +123,15 @@ class PostController extends Controller
         return back()->with('success', 'Post Deleted Successfully !');
     }
 }
+
+
+
+      // foreach ($posts as $post) {
+        //     $i = 1;
+        //     for ($i = 1; $i <= 3; $i++) {
+        //         DB::table('post_tag')->insert([
+        //             'post_id' => $post->id,
+        //             'tag_id' => $i
+        //         ]);
+        //     }
+        // }

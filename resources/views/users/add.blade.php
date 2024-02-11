@@ -32,6 +32,7 @@
                     <option value="writer" @selected('writer' == old('type'))>Writer</option>
                 </select>
             </div>
+
             <div class="my-3">
                 <input type="submit" class="form-control bg-success text-white" value="save" />
             </div>
