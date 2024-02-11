@@ -3,11 +3,11 @@
 @section('content')
     @if (count($posts))
         <div class="col-12">
-            <h1 class="text-center border p-2 my-3">View All Posts To Users</h1>
+            <h1 class="text-center  p-2 my-3">Read More ... Learn More</h1>
         </div>
     @endif
     @forelse($posts as $post)
-        <div class="col-12 my-3">
+        <div class="col-8 mx-auto my-3">
             <div class="card">
                 <div class="card-header">
                     {{ $post->user->name }} - {{ $post->created_at->format('Y-m-d') }}

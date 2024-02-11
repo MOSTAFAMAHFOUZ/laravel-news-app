@@ -21,7 +21,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        //
+        return view('tags.add');
     }
 
     /**
@@ -29,23 +29,24 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:50'
+        ]);
+        Tag::create([
+            'name' => $request->name
+        ]);
+        return back()->with('success', 'Data Added Successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        //
+        $tag = Tag::findOrFail($id);
+        return view("tags.edit", ['tag' => $tag]);
     }
 
     /**
@@ -53,7 +54,14 @@ class TagController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $tag = Tag::findOrFail($id);
+        request()->validate([
+            'name' => 'required|string|max:200',
+        ]);
+
+        $tag->name = $request->name;
+        $tag->save();
+        return redirect()->route('tags.index')->with("success", "Data Updated Successfully !");
     }
 
     /**
@@ -61,6 +69,8 @@ class TagController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $post = Tag::findOrFail($id);
+        $post->delete();
+        return back()->with('success', 'Data Deleted Successfully !');
     }
 }

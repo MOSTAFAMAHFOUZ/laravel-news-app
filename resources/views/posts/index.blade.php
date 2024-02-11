@@ -29,9 +29,8 @@
                         <td>{{ \Str::limit($post->description, 50) }}</td>
                         <td>{{ $post->user->name }}</td>
                         <td>
-                            {{-- @dd($post->tags) --}}
                             @foreach ($post->tags as $tag)
-                                {{ $tag->name }}
+                                <span class="badge bg-success">{{ $tag->name }}</span>
                                 <br>
                             @endforeach
                         </td>
