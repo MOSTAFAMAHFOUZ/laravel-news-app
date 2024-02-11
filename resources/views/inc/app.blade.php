@@ -29,6 +29,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('tags.index') }}">Tags</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('users.index') }}">Users</a>
+                    </li>
 
                 </ul>
                 <form class="d-flex" method="GET" action="{{ route('posts.search') }}" role="search">

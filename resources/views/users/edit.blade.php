@@ -1,0 +1,41 @@
+@extends('inc.app')
+
+@section('content')
+    <div class="col-12">
+        <h1 class="text-center my-2  p-3">Edit User</h1>
+
+    </div>
+    <div class="col-8 mx-auto">
+        <form method="POST" action="{{ route('users.update', $user->id) }}" class="form border p-3">
+            @csrf
+            @method('PUT')
+            @include('inc.message')
+            <div class="mb-3">
+                <label for="">Name</label>
+                <input type="text" name="name" class="form-control" value="{{ $user->name }}">
+            </div>
+            <div class="mb-3">
+                <label for="">Email</label>
+                <input type="text" name="email" class="form-control" value="{{ $user->email }}">
+            </div>
+            <div class="mb-3">
+                <label for="">Password</label>
+                <input type="password" name="password" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="">Confirm Password</label>
+                <input type="password" name="confirm_password" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="">User Type</label>
+                <select name="type" class="form-control">
+                    <option value="admin" @selected('admin' == $user->type)>Admin</option>
+                    <option value="writer" @selected('writer' == $user->type)>Writer</option>
+                </select>
+            </div>
+            <div class="my-3">
+                <input type="submit" class="form-control bg-success text-white" value="save" />
+            </div>
+        </form>
+    </div>
+@endsection
