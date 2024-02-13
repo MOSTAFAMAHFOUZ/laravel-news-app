@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use File;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
@@ -13,6 +14,7 @@ class Post extends Model
         'title',
         'description',
         'user_id',
+        'image'
     ];
 
     public function user()
@@ -23,5 +25,15 @@ class Post extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+
+    public function image()
+    {
+        // dd($this->image);
+        if (file_exists(public_path($this->image))) {
+            return asset($this->image);
+        }
+        return asset('default.png');
     }
 }

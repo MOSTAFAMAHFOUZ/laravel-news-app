@@ -6,7 +6,7 @@ use App\Models\Tag;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use File;
 
 class PostController extends Controller
 {
@@ -53,14 +53,18 @@ class PostController extends Controller
     {
         request()->validate([
             'title' => 'required|string|min:3|max:200',
-            'description' => 'required|string|max:1500',
-            'user_id' => "required|exists:users,id"
+            'description' => 'required|string|max:3500',
+            'user_id' => "required|exists:users,id",
+            'image' => ['required', 'image', 'mimes:png,jpeg,jpg,jif,webp', 'max:20048']
         ]);
 
+        $imagePath = $request->file('image')->store('images');
+        // dd($imagePath);
         $post = Post::create([
             'title' => $request->title,
             'description' => $request->description,
             'user_id' => $request->user_id,
+            'image' => $imagePath
         ]);
         // dd($request->tags);
         $post->tags()->sync($request->tags);
@@ -97,18 +101,26 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         request()->validate([
             'title' => 'required|string|min:3|max:200',
-            'description' => 'required|string|max:1500',
-            'user_id' => "required|exists:users,id"
+            'description' => 'required|string|max:15000',
+            'user_id' => "required|exists:users,id",
+            'image' => ['nullable', 'image', 'mimes:png,jpeg,jpg,jif,webp', 'max:20048']
         ]);
 
-
+        $old_image = $post->image;
         $post->title = $request->title;
         $post->description = $request->description;
         $post->user_id = $request->user_id;
+        if ($request->image !== null) {
+            $imagePath = $request->file('image')->store('images');
+            $post->image = $imagePath;
+            File::delete(public_path($old_image));
+        }
         $post->save();
+
 
         $post->tags()->detach($request->tags);
         $post->tags()->sync($request->tags);
+
 
         return redirect()->route('posts.index')->with("success", "Data Updated Successfully !");
     }
