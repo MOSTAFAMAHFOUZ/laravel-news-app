@@ -28,8 +28,9 @@
             <div class="mb-3">
                 <label for="">User Type</label>
                 <select name="type" class="form-control">
-                    <option value="admin" @selected('admin' == old('type'))>Admin</option>
-                    <option value="writer" @selected('writer' == old('type'))>Writer</option>
+                    @foreach (App\Enums\UserStatus::cases() as $type)
+                        <option value="{{ $type->value }}" @selected($type->value == old('type'))>{{ $type->value }}</option>
+                    @endforeach
                 </select>
             </div>
 

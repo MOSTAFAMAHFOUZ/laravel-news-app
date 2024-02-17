@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use File;
 use App\Models\Tag;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
-use File;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
@@ -24,11 +25,7 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function home()
-    {
-        $posts = Post::orderBy("created_at", "desc")->paginate(20);
-        return view("posts.home", ['posts' => $posts]);
-    }
+
 
     public function search(Request $request)
     {
@@ -98,6 +95,7 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        Gate::authorize('update', Post::class);
         $post = Post::findOrFail($id);
         request()->validate([
             'title' => 'required|string|min:3|max:200',

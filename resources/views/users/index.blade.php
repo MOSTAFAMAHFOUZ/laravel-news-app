@@ -22,11 +22,15 @@
             </thead>
             <tbody>
                 @foreach ($users as $user)
-                    <tr>
+                    <tr class="">
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
-                        <td>{{ $user->type }}</td>
+                        <td>
+                            <span class="badge p-1 {{ $user->type->color() }}">
+                                {{ $user->type }}
+                            </span>
+                        </td>
                         <td>
                             <a href="{{ route('users.edit', $user->id) }}" class="btn btn-info" id="">Edit</a>
                         </td>

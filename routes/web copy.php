@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TagController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\PayOrderController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,14 +17,11 @@ use App\Http\Controllers\PayOrderController;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get("/", [PostController::class, 'home']);
 Route::get("posts/search", [PostController::class, "search"])->name('posts.search');
-Route::group(['middleware' => 'auth'], function () {
-    Route::resource("posts", PostController::class);
-    Route::resource("tags", TagController::class)->except(['show']);
-    Route::resource("users", UserController::class)->except(['show']);
-});
+Route::resource("posts", PostController::class);
+Route::resource("tags", TagController::class)->except(['show']);
+Route::resource("users", UserController::class)->except(['show']);
 
 
-Auth::routes();
 Route::get('pay', [PayOrderController::class, 'index']);
