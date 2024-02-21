@@ -17,9 +17,6 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(PaymentGatway::class, function () {
             return new PaymentGatway("USD");
         });
-        $this->app->singleton("PaymentFacade", function ($app) {
-            return
-        });
     }
 
     /**
