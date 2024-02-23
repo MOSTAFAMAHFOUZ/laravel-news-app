@@ -27,7 +27,7 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>
-                            <span class="badge p-1 {{ $user->type->color() }}">
+                            <span class="badge p-1 {{ $user->typeColor() }}">
                                 {{ $user->type }}
                             </span>
                         </td>

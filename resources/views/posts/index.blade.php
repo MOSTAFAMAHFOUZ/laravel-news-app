@@ -2,8 +2,11 @@
 
 @section('content')
     <div class="col-12">
+        @can('add',\App\Models\Post::class)
         <a href="{{ route('posts.create') }}" class="btn btn-primary my-3">Add New Post</a>
+        @endcan
         <h1 class="text-center p-2 my-3 border">View All Posts To Admin</h1>
+
         @if (session()->get('success') !== null)
             <div class="alert alert-success p-1">
                 {{ session()->get('success') }}
@@ -35,16 +38,19 @@
                             @endforeach
                         </td>
                         <td>
-                            {{-- @can('update', $post) --}}
+                            @can('update', $post)
                             <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-info" id="">Edit</a>
-                            {{-- @endcan --}}
+                            @endcan
                         </td>
                         <td>
+                            @can('delete', $post)
                             <form action="{{ route('posts.destroy', $post->id) }}" method="post">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger" id="">Delete</button>
                             </form>
+                            @endcan
+
                         </td>
                     </tr>
                 @endforeach

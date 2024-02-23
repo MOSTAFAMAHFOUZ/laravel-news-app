@@ -16,9 +16,19 @@ class PostPolicy
     }
 
 
+    public function view(User $user)
+    {
+        return $user->type === "admin" ;
+    }
+
     public function update(User $user)
     {
         return $user->type === "admin";
+    }
+
+    public function add(User $user)
+    {
+        return $user->type === "writer";
     }
 
     public function delete(User $user)
