@@ -95,7 +95,7 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        Gate::authorize('update', Post::class);
+        // Gate::authorize('update', Post::class);
         $post = Post::findOrFail($id);
         request()->validate([
             'title' => 'required|string|min:3|max:200',

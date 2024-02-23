@@ -36,4 +36,9 @@ class Post extends Model
         }
         return asset('default.png');
     }
+
+
+    protected $hidden = [
+        'created_at', 'updated_at',
+    ];
 }

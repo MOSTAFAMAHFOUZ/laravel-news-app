@@ -19,7 +19,7 @@ class PostFactory extends Factory
         return [
             'title' => $this->faker->title,
             'description' => $this->faker->paragraph(15),
-            'image' => $this->faker->imageUrl,
+            'image' => '1.png',
         ];
     }
 }
