@@ -19,6 +19,7 @@ class RegisterController extends Controller
 
         $user = User::create($data);
         $token = $user->createToken('API Token')->plainTextToken;
-        return $this->apiResponse(["token" => $token]);
+        return $this->apiResponse(['token' => $token,
+        "token_type"=>"Bearer"],200);
     }
 }

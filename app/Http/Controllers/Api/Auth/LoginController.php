@@ -21,7 +21,10 @@ class LoginController extends Controller
             $user = \Auth::user();
             $token = $user->createToken('API Token')->plainTextToken;
 
-            return $this->apiResponse(['token' => $token], 200);
+            return $this->apiResponse([
+                'token' => $token,
+                "token_type"=>"Bearer"
+            ], 200);
         }
         throw ValidationException::withMessages([
             'email' => ['The provided credentials are incorrect.'],
