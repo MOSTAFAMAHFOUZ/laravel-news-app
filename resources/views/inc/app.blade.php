@@ -7,6 +7,11 @@
     <title>News App - Laravel</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <style>
+            li.active{
+                font-weight: bold;
+            }
+        </style>
 </head>
 
 <body>
@@ -24,14 +29,17 @@
                         <a class="nav-link active" aria-current="page" href="{{ url('/') }}">Home</a>
                     </li>
                     @auth
-                        <li class="nav-item">
+                        <li class="nav-item @if(request()->is("posts*")) active @endif ">
                             <a class="nav-link" href="{{ route('posts.index') }}">Posts</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item @if(request()->is("tags*")) active @endif">
                             <a class="nav-link" href="{{ route('tags.index') }}">Tags</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item @if(request()->is("users*")) active @endif">
                             <a class="nav-link" href="{{ route('users.index') }}">Users</a>
+                        </li>
+                        <li class="nav-item @if(request()->is("ajax-tags*")) active @endif">
+                            <a class="nav-link" href="{{ route('ajax-tags.index') }}">Ajax</a>
                         </li>
                     @endauth
 
@@ -94,4 +102,6 @@
     </script>
 </body>
 
+
+@yield('script')
 </html>

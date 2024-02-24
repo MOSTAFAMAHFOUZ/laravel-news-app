@@ -32,6 +32,15 @@ class User extends Authenticatable
 
 
 
+    public function typeColor(): string
+    {
+        return match ($this->type) {
+            'admin' => 'bg-success',
+            'writer' => 'bg-warning',
+            default => 'bg-primary'
+        };
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -50,6 +59,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
-        'type' => UserStatus::class
+        // 'type' => UserStatus::class
+
     ];
 }

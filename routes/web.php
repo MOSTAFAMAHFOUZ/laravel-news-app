@@ -5,6 +5,7 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TagAjaxController;
 use App\Http\Controllers\PayOrderController;
 
 /*
@@ -23,6 +24,7 @@ Route::get("posts/search", [PostController::class, "search"])->name('posts.searc
 Route::group(['middleware' => 'auth'], function () {
     Route::resource("posts", PostController::class);
     Route::resource("tags", TagController::class)->except(['show']);
+    Route::resource("ajax-tags", TagAjaxController::class)->except(['show']);
     Route::resource("users", UserController::class)->except(['show']);
 });
 
