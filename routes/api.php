@@ -30,4 +30,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('posts', PostController::class);
     Route::apiResource('users', UserController::class);
     Route::apiResource('tags', TagController::class);
+
+
+});
+
+//
+Route::group(['prefix'=>'v1','namespace'=>"App\Http\Controllers\Api\V1"],function(){
+    Route::resource('customers',CustomerController::class);
+    Route::resource('invoices',InvoiceController::class);
 });

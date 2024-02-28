@@ -19,6 +19,10 @@ class DatabaseSeeder extends Seeder
             \App\Models\Post::factory(5)->create(['user_id' => $user->id]);
         });
 
+        $this->call([
+            CustomerSeeder::class
+        ]);
+
 
 
         // \App\Models\User::factory()->create([
