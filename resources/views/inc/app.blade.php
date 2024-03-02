@@ -41,6 +41,9 @@
                         <li class="nav-item @if(request()->is("ajax-tags*")) active @endif">
                             <a class="nav-link" href="{{ route('ajax-tags.index') }}">Ajax</a>
                         </li>
+                        <li class="nav-item @if(request()->is("contact-us*")) active @endif">
+                            <a class="nav-link" href="{{ route('front.contact') }}">Contact Us</a>
+                        </li>
                     @endauth
 
                 </ul>

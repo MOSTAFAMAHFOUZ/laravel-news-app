@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\V1\CustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,4 +39,6 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::group(['prefix'=>'v1','namespace'=>"App\Http\Controllers\Api\V1"],function(){
     Route::resource('customers',CustomerController::class);
     Route::resource('invoices',InvoiceController::class);
+
+    Route::post("bulk-invoices",[CustomerController::class,'bulkStore']);
 });

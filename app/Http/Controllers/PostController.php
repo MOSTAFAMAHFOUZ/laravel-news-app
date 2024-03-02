@@ -16,7 +16,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::orderBy("created_at", "desc")->paginate(20);
+        $posts = Post::with('user','tags')->orderBy("created_at", "desc")->paginate(20);
 
         return view("posts.index", ['posts' => $posts]);
     }
@@ -95,8 +95,8 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // Gate::authorize('update', Post::class);
         $post = Post::findOrFail($id);
+        Gate::authorize('update', $post);
         request()->validate([
             'title' => 'required|string|min:3|max:200',
             'description' => 'required|string|max:15000',

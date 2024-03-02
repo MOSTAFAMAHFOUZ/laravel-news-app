@@ -26,6 +26,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource("tags", TagController::class)->except(['show']);
     Route::resource("ajax-tags", TagAjaxController::class)->except(['show']);
     Route::resource("users", UserController::class)->except(['show']);
+
+    Route::get('contact-us',[HomeController::class,'contactUs'])->name('front.contact');
+    Route::post('contact-us',[HomeController::class,'sendMessage'])->name('front.send-message');
 });
 
 
